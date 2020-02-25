@@ -1,4 +1,4 @@
 .vscode/
 dotm.code-workspace
 .DS_Store
-.extracted/*
+.extracted/
