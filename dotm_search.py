@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 import os
 import argparse
 import sys
@@ -13,7 +10,7 @@ if sys.version_info[0] < 3:
 
 __author__ = "Janell.Huyck with help from madarp and knmarvel"
 
-
+# kano says: I see the point of separating this into its own function instead of shoving it into main. 
 def parse_arguments():
     """ Require and get the arguments passed in on the command line
     when the program is called."""
@@ -26,7 +23,9 @@ def parse_arguments():
 
     return result
 
-
+# kano says: the issue with this function is that sometimes, the file suffix doesn't 
+# actually reflect what the file is. This will still return 800 files even though one
+# file is not actually a dotm file. 
 def select_dotm_files(search_directory):
     """ Return a list of all files with the suffix .dotm"""
 
@@ -36,6 +35,9 @@ def select_dotm_files(search_directory):
             if filename.endswith(".dotm"):
                 file_list.append(os.path.join(dirpath, filename))
     return file_list
+
+# kano says: I don't know if perform_search and find_search_context should be separated out. 
+# however, your find_search_context is more vigorous than mine.
 
 
 def perform_search(search_directory, search_text):
@@ -58,9 +60,12 @@ def perform_search(search_directory, search_text):
             match_count += 1
 
     print("Number of files searched: ", len(file_list))
+    # kano says: wow,  I like this .format method! I didn't know
+    # about it before. Thank you!
     print('Found {} files with "{}".'.format(match_count, search_text))
 
-
+# kano says: I said previously that yours is more rigorous than mine.
+# I wonder how to make this function smaller...
 def find_search_context(file_data, search_text):
     """Return a string of approximately 40 characters on either side of the
     searched text.  Account for if the searched text is near either end of
@@ -78,7 +83,7 @@ def find_search_context(file_data, search_text):
     else:
         return file_data[search_index - 40: end_slice]
 
-
+#kano says: beautiful main(). well done.
 def main():
     """Print to the terminal a list of all files and an excerpt from them
     for a given directory (default = cwd) and search term."""
