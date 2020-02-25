@@ -14,36 +14,37 @@ __author__ = "knmarvel"
 #   time spent on this project: 2 hrs
 
 
-def examine_files(directory, character):
+def examine_files(dir, char):
     files = {}
-    print(len(os.listdir(directory)))
     total_files_searched = 0
-    for filename in os.listdir(directory):
-        filepath = directory + "/" + filename
+    for filename in os.listdir(dir):
+        filepath = dir + "/" + filename
         if zipfile.is_zipfile(filepath):
             with zipfile.ZipFile(filepath, 'r') as zip_ref:
                 zip_ref.extractall("./extracted")
-            with open('./extracted/word/document.xml', "r") as words:
-                words = words.read()
-            if "office/word" in words:
+            with open('./extracted/word/document.xml', "r") as doc:
+                doc = doc.read()
+            if "office/word" in doc:
                 total_files_searched += 1
-                if character in words:
-                    files[filename] = words[words.index(character) - 40: words.index(character) + 40]
-    print("Number of files searched: " + str(total_files_searched))
-    print("Number of files found: " + str(len(files)))
-    print("\n".join([": ".join([x, files[x]]) for x in files]))
-    return ("; ".join([": ".join([x, files[x]]) for x in files]))
+                if char in doc:
+                    files[filename] = doc[doc.index(char) - 40: doc.index(char) + 40]
+    f_srched = "# of files searched: " + str(total_files_searched)
+    f_fnd = "# of files found:" + str(len(files))
+    f = "\n".join([": ".join([x, files[x]]) for x in files])
+    return (f_srched + "\n" + f_fnd + "\n" + f)
 
 
 def main():
     parser.add_argument('--dir', help='directory to find data',
-                        type=str, default='--dir')
+                        type=str, default='./dotm_files')
     parser.add_argument('--char',
                         help="the character you want to search for",
                         type=str,
                         default="$")
     args = parser.parse_args()
-    return examine_files(args.dir, args.char)
+    ans = examine_files(args.dir, args.char)
+    print(ans)
+    return ans
 
 
 if __name__ == '__main__':
