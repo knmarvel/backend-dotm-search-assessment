@@ -15,8 +15,8 @@ __author__ = "knmarvel"
 
 
 def examine_files(dir, char):
-    files = {}
     total_files_searched = 0
+    total_files_found = 0
     for filename in os.listdir(dir):
         filepath = dir + "/" + filename
         if zipfile.is_zipfile(filepath):
@@ -27,11 +27,12 @@ def examine_files(dir, char):
             if "office/word" in doc:
                 total_files_searched += 1
                 if char in doc:
-                    files[filename] = doc[doc.index(char) - 40: doc.index(char) + 40]
+                    total_files_found += 1
+                    print(filename + ": " +
+                          doc[doc.index(char) - 40: doc.index(char) + 40])
     f_srched = "# of files searched: " + str(total_files_searched)
-    f_fnd = "# of files found:" + str(len(files))
-    f = "\n".join([": ".join([filename, files[filename]]) for filename in files])
-    return (f_srched + "\n" + f_fnd + "\n" + f)
+    f_fnd = "# of files found:" + str(total_files_found)
+    return (f_srched + "\n" + f_fnd)
 
 
 def parsing():
