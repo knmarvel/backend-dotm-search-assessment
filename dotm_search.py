@@ -30,7 +30,7 @@ def examine_files(dir, char):
                     files[filename] = doc[doc.index(char) - 40: doc.index(char) + 40]
     f_srched = "# of files searched: " + str(total_files_searched)
     f_fnd = "# of files found:" + str(len(files))
-    f = "\n".join([": ".join([x, files[x]]) for x in files])
+    f = "\n".join([": ".join([filename, files[filename]]) for filename in files])
     return (f_srched + "\n" + f_fnd + "\n" + f)
 
 
