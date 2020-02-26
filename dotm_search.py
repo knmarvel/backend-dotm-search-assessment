@@ -34,14 +34,18 @@ def examine_files(dir, char):
     return (f_srched + "\n" + f_fnd + "\n" + f)
 
 
-def main():
-    parser.add_argument('--dir', help='directory to find data',
+def parsing():
+    parser.add_argument('--dir', help='directory of files to search',
                         type=str, default='./dotm_files')
     parser.add_argument('--char',
                         help="the character you want to search for",
                         type=str,
                         default="$")
-    args = parser.parse_args()
+    return parser.parse_args()
+
+
+def main():
+    args = parsing()
     ans = examine_files(args.dir, args.char)
     print(ans)
     return ans
